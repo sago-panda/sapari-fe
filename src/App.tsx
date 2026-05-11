@@ -11,6 +11,7 @@ function App() {
     <>
       <div>
         <div>woff woff2 test</div>
+        <div>git kraken 테스트</div>
         <div style={{ fontFamily: 'minsans_bold' }}>minsans_bold</div>
         <div style={{ fontFamily: 'minsans_medium' }}>minsans_medium</div>
         <div style={{ fontFamily: 'minsans_regular' }}>minsans_regular</div>
