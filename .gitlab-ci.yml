@@ -10,6 +10,10 @@ stages: [validate, build, test, sign, bump]
 include:
   # ── 공용 커스텀 컴포넌트 (GitLab 내장이 없는 영역) ──
   - component: $CI_SERVER_FQDN/sagopanda/sapari-cicd-template/validate-node@main
+    inputs:
+      # eslint flat config 가 .yarn/.pnp 생성물까지 린트해 실패 → CI 에서 무시패턴 추가.
+      # (정석은 eslint.config.js 의 ignores 에 '.yarn/**','.pnp.*' 추가 — 앱 소유자 권장)
+      lint_cmd: 'yarn lint --ignore-pattern ".yarn/**" --ignore-pattern ".pnp.*"'
   - component: $CI_SERVER_FQDN/sagopanda/sapari-cicd-template/build@main
   - component: $CI_SERVER_FQDN/sagopanda/sapari-cicd-template/sign@main
   - component: $CI_SERVER_FQDN/sagopanda/sapari-cicd-template/bump@main
