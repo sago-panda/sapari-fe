@@ -14,16 +14,20 @@ include:
       # eslint flat config 가 .yarn/.pnp 생성물까지 린트해 실패 → CI 에서 무시패턴 추가.
       # (정석은 eslint.config.js 의 ignores 에 '.yarn/**','.pnp.*' 추가 — 앱 소유자 권장)
       lint_cmd: 'yarn lint --ignore-pattern ".yarn/**" --ignore-pattern ".pnp.*"'
+  - component: $CI_SERVER_FQDN/sagopanda/sapari-cicd-template/audit-yarn@main
+    inputs:
+      severity: high          # high/critical 이면 실패. moderate 로 낮추면 더 엄격
   - component: $CI_SERVER_FQDN/sagopanda/sapari-cicd-template/build@main
   - component: $CI_SERVER_FQDN/sagopanda/sapari-cicd-template/sign@main
   - component: $CI_SERVER_FQDN/sagopanda/sapari-cicd-template/bump@main
     inputs:
       manifest_file: components/frontend/deployment.yaml
       container_name: web
-  # ── GitLab 내장 보안 스캐너 (script 0, 네이티브 리포트 + SBOM) ──
+  # ── GitLab 내장 보안 스캐너 (script 0, 네이티브 리포트) ──
   - template: Security/Secret-Detection.gitlab-ci.yml
-  - template: Security/Dependency-Scanning.gitlab-ci.yml   # CycloneDX SBOM 자동 생성
   - template: Security/Container-Scanning.gitlab-ci.yml    # 빌드된 이미지 취약점
+  # Dependency-Scanning(gemnasium) 제외: Yarn Berry yarn.lock v9 미지원(FATAL).
+  # npm 의존성 SBOM 이 필요하면 Trivy fs(cyclonedx)로 별도 생성 권장.
 
 variables:
   # Container-Scanning 이 검사할 이미지(build 가 push 한 것)
