@@ -1,0 +1,37 @@
+# sapari-fe — 로직 최소화. 빌드/서명/배포트리거는 공용 컴포넌트, 스캔/SBOM은 GitLab 내장.
+# 흐름: validate → build(push :sha+:main, digest) → test(내장 스캔) → sign(digest+SBOM attest) → bump(GitOps digest)
+#
+# 필요 변수(Settings → CI/CD → Variables):
+#   MANIFEST_WRITE_TOKEN : sapari-helm-manifest write_repository 토큰 (Masked)
+# 전제: zero-install 캐시에 linux-x64-gnu 네이티브 바인딩 커밋, build-buildx는 dind 러너 필요.
+
+stages: [validate, build, test, sign, bump]
+
+include:
+  # ── 공용 커스텀 컴포넌트 (GitLab 내장이 없는 영역) ──
+  - component: $CI_SERVER_FQDN/sagopanda/sapari-cicd-template/validate-node@main
+  - component: $CI_SERVER_FQDN/sagopanda/sapari-cicd-template/build@main
+  - component: $CI_SERVER_FQDN/sagopanda/sapari-cicd-template/sign@main
+  - component: $CI_SERVER_FQDN/sagopanda/sapari-cicd-template/bump@main
+    inputs:
+      manifest_file: components/frontend/deployment.yaml
+      container_name: web
+  # ── GitLab 내장 보안 스캐너 (script 0, 네이티브 리포트 + SBOM) ──
+  - template: Security/Secret-Detection.gitlab-ci.yml
+  - template: Security/Dependency-Scanning.gitlab-ci.yml   # CycloneDX SBOM 자동 생성
+  - template: Security/Container-Scanning.gitlab-ci.yml    # 빌드된 이미지 취약점
+
+variables:
+  # Container-Scanning 이 검사할 이미지(build 가 push 한 것)
+  CS_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+  CS_REGISTRY_USER: $CI_REGISTRY_USER
+  CS_REGISTRY_PASSWORD: $CI_REGISTRY_PASSWORD
+
+# 내장 스캐너 — 이미지 스캔(container_scanning)은 build(push) 이후 = main 에서만.
+#   dependency_scanning / secret_detection 은 소스 스캔이라 템플릿 기본 rules·stage(test) 그대로 둔다.
+#   (그 둘은 GitLab 버전마다 잡 이름이 달라, 빈 override 를 두면 script 없는 orphan job 으로 에러남)
+container_scanning:
+  needs:
+    - job: build        # 이미지가 push 된 뒤 실행
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
