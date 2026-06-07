@@ -3,6 +3,7 @@
 // import viteLogo from './assets/vite.svg'
 // import heroImg from './assets/hero.png'
 import './App.css';
+import { Btn } from './components';
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -10,13 +11,26 @@ function App() {
   return (
     <>
       <div>
-        <div>woff woff2 test</div>
+        {/* <div>woff woff2 test</div>
         <div>git kraken 테스트</div>
         <div style={{ fontFamily: 'minsans_bold' }}>minsans_bold</div>
         <div style={{ fontFamily: 'minsans_medium' }}>minsans_medium</div>
         <div style={{ fontFamily: 'minsans_regular' }}>minsans_regular</div>
         <div style={{ fontFamily: 'minsans_light' }}>minsans_light</div>
-        <div style={{ fontFamily: 'jalnan_bold' }}>jalnan_bold</div>
+        <div style={{ fontFamily: 'jalnan_bold' }}>jalnan_bold</div> */}
+        <div>vanilla extract text</div>
+        <Btn color='primary' size='medium' radius='medium'>
+          Primary Button
+        </Btn>
+        <Btn color='primaryEmpty' size='medium' radius='medium'>
+          Primary Empty Button
+        </Btn>
+        <Btn color='empty' size='medium' radius='medium'>
+          Empty Button
+        </Btn>
+        <Btn color='primary' size='full' radius='round'>
+          Full Button
+        </Btn>
       </div>
       {/* <section id="center">
         <div className="hero">
