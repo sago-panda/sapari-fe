@@ -6,7 +6,7 @@
 // import './styles/theme.css.ts';
 // import './styles/typography.css.ts';
 // import './styles/global.css.ts';
-import { Btn } from './components/atoms';
+// import { Btn } from './components/atoms';
 import { Router } from './router/Router';
 
 function App() {

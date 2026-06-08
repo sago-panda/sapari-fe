@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import { Btn } from '../components/atoms';
 
 export default function MainPage() {
