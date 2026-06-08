@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
-import { vars } from '../../styles/theme.css.ts';
+import { vars } from '../../../styles/theme.css';
 
 export const btnBase = style({
   boxSizing: 'border-box',
