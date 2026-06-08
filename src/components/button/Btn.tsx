@@ -19,6 +19,8 @@ export default function Btn({
   ...props
 }: BtnProps) {
   console.log('Btn rendered with color:', color);
+  console.log('아니 여기 와이파이 깃랩도 안되냐');
+  console.log('토큰 귀찮누');
   return (
     <button
       type='button'
