@@ -2,7 +2,10 @@
 // import reactLogo from './assets/react.svg'
 // import viteLogo from './assets/vite.svg'
 // import heroImg from './assets/hero.png'
-import './App.css';
+// import './App.css';
+// import './styles/theme.css.ts';
+// import './styles/typography.css.ts';
+// import './styles/global.css.ts';
 import { Btn } from './components';
 
 function App() {
@@ -11,13 +14,6 @@ function App() {
   return (
     <>
       <div>
-        {/* <div>woff woff2 test</div>
-        <div>git kraken 테스트</div>
-        <div style={{ fontFamily: 'minsans_bold' }}>minsans_bold</div>
-        <div style={{ fontFamily: 'minsans_medium' }}>minsans_medium</div>
-        <div style={{ fontFamily: 'minsans_regular' }}>minsans_regular</div>
-        <div style={{ fontFamily: 'minsans_light' }}>minsans_light</div>
-        <div style={{ fontFamily: 'jalnan_bold' }}>jalnan_bold</div> */}
         <div>vanilla extract text</div>
         <Btn color='primary' size='medium' radius='medium'>
           Primary Button
