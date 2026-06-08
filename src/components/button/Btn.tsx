@@ -18,6 +18,7 @@ export default function Btn({
   className = '',
   ...props
 }: BtnProps) {
+  console.log('Btn rendered with color:', color);
   return (
     <button
       type='button'
