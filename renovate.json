@@ -22,6 +22,17 @@
       "prBodyNotes": [
         "#### 왜 열렸나\n베이스 이미지의 **새 버전 태그** 릴리스 (위 릴리스 노트 참고).\n⚠️ digest 갱신과 달리 런타임/빌드 동작이 바뀔 수 있음 — `digest-diff` 의 CVE diff 와 함께 빌드 결과를 확인하고 merge 할 것."
       ]
+    },
+    {
+      "description": "비-major 는 MR 1개로 그룹 — 개별 merge 부담 제거",
+      "matchManagers": ["dockerfile"],
+      "matchUpdateTypes": ["digest", "pin", "patch", "minor"],
+      "groupName": "베이스 이미지 (non-major)"
+    },
+    {
+      "description": "major(node v24 등)는 바로 MR 열지 않고 Dependency Dashboard 체크박스 승인 후 생성",
+      "matchUpdateTypes": ["major"],
+      "dependencyDashboardApproval": true
     }
   ]
 }
