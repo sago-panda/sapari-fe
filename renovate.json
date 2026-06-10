@@ -9,7 +9,8 @@
   "enabledManagers": ["dockerfile", "npm"],
   "pinDigests": true,
   "lockFileMaintenance": {
-    "enabled": true
+    "enabled": true,
+    "schedule": ["before 10am on monday"]
   },
   "osvVulnerabilityAlerts": true,
   "vulnerabilityAlerts": {
