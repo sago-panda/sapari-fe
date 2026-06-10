@@ -1,0 +1,27 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "timezone": "Asia/Seoul",
+  "labels": ["renovate"],
+  "enabledManagers": ["dockerfile"],
+  "pinDigests": true,
+  "packageRules": [
+    {
+      "description": "베이스 digest 갱신(태그 동일, 재빌드) — 사유와 확인 경로를 본문에 명시",
+      "matchManagers": ["dockerfile"],
+      "matchUpdateTypes": ["digest", "pin"],
+      "commitMessageTopic": "{{depName}} 베이스 digest",
+      "prBodyNotes": [
+        "#### 왜 열렸나\n태그는 그대로지만 베이스 이미지가 **재빌드되어 새 digest 가 발행**됨 — 보통 베이스 OS 의 보안패치(CVE 수정) 반영이다.\n\n#### 구체적으로 무엇이 바뀌나\n이 MR 파이프라인의 **`digest-diff` 잡**이 old↔new 베이스를 trivy 로 비교해 *고쳐진 CVE / 새로 생긴 CVE* 목록을 산출한다 → MR 위젯의 `CVE diff` 아티팩트 확인.\n\n#### merge 하면\nmain 파이프라인이 새 베이스로 build → sign(서명·SBOM) → bump → ArgoCD 자동 배포."
+      ]
+    },
+    {
+      "description": "베이스 버전 업데이트(태그 자체 변경) — 신중 검토 대상",
+      "matchManagers": ["dockerfile"],
+      "matchUpdateTypes": ["major", "minor", "patch"],
+      "prBodyNotes": [
+        "#### 왜 열렸나\n베이스 이미지의 **새 버전 태그** 릴리스 (위 릴리스 노트 참고).\n⚠️ digest 갱신과 달리 런타임/빌드 동작이 바뀔 수 있음 — `digest-diff` 의 CVE diff 와 함께 빌드 결과를 확인하고 merge 할 것."
+      ]
+    }
+  ]
+}
