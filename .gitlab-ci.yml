@@ -1,11 +1,21 @@
-# sapari-fe — 로직 최소화. 빌드/서명/배포트리거는 공용 컴포넌트, 스캔/SBOM은 GitLab 내장.
-# 흐름: validate → build(push :sha+:main, digest) → test(내장 스캔) → sign(digest+SBOM attest) → bump(GitOps digest)
+# sapari-fe — 로직 최소화. 빌드/서명/배포트리거는 공용 컴포넌트, 스캔은 GitLab 내장(SBOM 은 sign 이 trivy 로 생성).
+# 흐름: validate → build(push :sha+:main, digest) → test(내장 스캔) → sign(digest 서명+SBOM attest) → bump(GitOps digest)
 #
 # 필요 변수(Settings → CI/CD → Variables):
-#   MANIFEST_WRITE_TOKEN : sapari-helm-manifest write_repository 토큰 (Masked)
-# 전제: zero-install 캐시에 linux-x64-gnu 네이티브 바인딩 커밋, build-buildx는 dind 러너 필요.
+#   MANIFEST_WRITE_TOKEN : sapari-helm-manifest write_repository 토큰
+#                          (Masked + Protected + environment scope `gitops` — bump 잡에만 주입)
+# 전제: zero-install 캐시에 linux-x64-gnu 네이티브 바인딩 커밋, build는 dind 러너 필요.
 
 stages: [validate, build, test, sign, bump]
+
+# 중복 파이프라인 방지: MR 이 열려 있는 브랜치는 MR 파이프라인만 돌린다
+# (Renovate 처럼 push+MR 이 동시에 생기는 경우 같은 커밋이 2번 돌던 것 차단)
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS'
+      when: never
+    - if: '$CI_COMMIT_BRANCH'
 
 include:
   # ── 공용 커스텀 컴포넌트 (GitLab 내장이 없는 영역) ──
@@ -17,6 +27,8 @@ include:
   - component: $CI_SERVER_FQDN/sagopanda/sapari-cicd-template/audit-yarn@main
     inputs:
       severity: high          # high/critical 이면 실패. moderate 로 낮추면 더 엄격
+  # Dockerfile digest 변경 MR(Renovate 등)에 old↔new 베이스 CVE diff 를 산출(정보성, allow_failure)
+  - component: $CI_SERVER_FQDN/sagopanda/sapari-cicd-template/digest-diff@main
   - component: $CI_SERVER_FQDN/sagopanda/sapari-cicd-template/build@main
   - component: $CI_SERVER_FQDN/sagopanda/sapari-cicd-template/sign@main
   - component: $CI_SERVER_FQDN/sagopanda/sapari-cicd-template/bump@main
@@ -36,8 +48,8 @@ variables:
   CS_REGISTRY_PASSWORD: $CI_REGISTRY_PASSWORD
 
 # 내장 스캐너 — 이미지 스캔(container_scanning)은 build(push) 이후 = main 에서만.
-#   dependency_scanning / secret_detection 은 소스 스캔이라 템플릿 기본 rules·stage(test) 그대로 둔다.
-#   (그 둘은 GitLab 버전마다 잡 이름이 달라, 빈 override 를 두면 script 없는 orphan job 으로 에러남)
+#   secret_detection 은 소스 스캔이라 템플릿 기본 rules·stage(test) 그대로 둔다.
+#   (GitLab 버전마다 잡 이름이 달라, 빈 override 를 두면 script 없는 orphan job 으로 에러남)
 container_scanning:
   needs:
     - job: build        # 이미지가 push 된 뒤 실행
