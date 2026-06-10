@@ -1,10 +1,25 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
+  "extends": [
+    "config:recommended",
+    "mergeConfidence:all-badges"
+  ],
   "timezone": "Asia/Seoul",
   "labels": ["renovate"],
-  "enabledManagers": ["dockerfile"],
+  "enabledManagers": ["dockerfile", "npm"],
   "pinDigests": true,
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+  "osvVulnerabilityAlerts": true,
+  "vulnerabilityAlerts": {
+    "labels": ["renovate", "security"],
+    "prPriority": 10,
+    "schedule": ["at any time"],
+    "prBodyNotes": [
+      "#### 🚨 보안 업데이트 — 우선 처리 대상\nOSV(GitHub Advisory 통합) 데이터베이스에 등재된 **알려진 취약점을 수정하는 버전**이다.\n그룹핑/스케줄/승인제를 우회해 개별 MR 로 생성됨 — 취약점 상세(ID·심각도·영향 범위)는 위 본문 참고.\n\n#### 처리 절차\n1. 파이프라인(validate·audit) 초록 확인\n2. **다른 MR 보다 먼저 merge** → main 파이프라인이 재빌드·서명·배포\n3. 영향 의심 시 배포 후 동작 확인"
+    ]
+  },
   "packageRules": [
     {
       "description": "베이스 digest 갱신(태그 동일, 재빌드) — 사유와 확인 경로를 본문에 명시",
@@ -28,6 +43,12 @@
       "matchManagers": ["dockerfile"],
       "matchUpdateTypes": ["digest", "pin", "patch", "minor"],
       "groupName": "베이스 이미지 (non-major)"
+    },
+    {
+      "description": "npm 비-major 도 MR 1개로 그룹 (react/vite 등 개별 MR 양산 방지)",
+      "matchManagers": ["npm"],
+      "matchUpdateTypes": ["patch", "minor", "pin"],
+      "groupName": "npm (non-major)"
     },
     {
       "description": "major(node v24 등)는 바로 MR 열지 않고 Dependency Dashboard 체크박스 승인 후 생성",
