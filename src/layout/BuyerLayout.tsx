@@ -1,11 +1,11 @@
 // import React from 'react';
 import { Outlet } from 'react-router';
-import * as styles from './defaultLayout.css';
+import * as styles from './buyerLayout.css';
 // import { Btn } from '../components/atoms';
 
-export default function DefaultLayout() {
+export default function BuyerLayout() {
   return (
-    <div className={styles.defaultLayout}>
+    <div className={styles.buyerLayout}>
       <Outlet />
     </div>
   );

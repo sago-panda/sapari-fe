@@ -1,10 +1,11 @@
 import { globalFontFace } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
 
 globalFontFace('minsans_bold', {
   src: [
     'local(minsans_bold)',
     "url('../assets/fonts/MinSans-Bold.woff2') format('woff2')",
-    "url('./assets/fonts/MinSans-Bold.woff') format('woff')",
+    "url('../assets/fonts/MinSans-Bold.woff') format('woff')",
   ].join(', '),
   fontWeight: 'normal',
   fontStyle: 'normal',
@@ -53,4 +54,21 @@ globalFontFace('jalnan_bold', {
   fontWeight: 'normal',
   fontStyle: 'normal',
   fontDisplay: 'swap',
+});
+
+export const fontRecipe = recipe({
+  variants: {
+    type: {
+      title: {
+        fontFamily: 'jalnan_bold',
+        fontSize: '24px',
+        lineHeight: 1.4,
+      },
+      content: {
+        fontFamily: 'minsans_regular',
+        fontSize: '16px',
+        lineHeight: 1.6,
+      },
+    },
+  },
 });

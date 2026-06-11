@@ -8,9 +8,11 @@ export const btnBase = style({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  cursor: 'pointer',
   border: 'none',
   gap: '4px',
+  lineHeight: '130%',
+  letterSpacing: '-0.04em',
+  cursor: 'pointer',
 });
 
 export const btnVariant = recipe({
@@ -36,6 +38,10 @@ export const btnVariant = recipe({
         color: vars.color.text.main,
         border: `1px solid ${vars.color.border}`,
       },
+      disabled: {
+        backgroundColor: vars.color.off_white,
+        color: vars.color.text.secondary,
+      },
     },
     size: {
       small: {
@@ -54,6 +60,11 @@ export const btnVariant = recipe({
         width: '100%',
         fontSize: '16px',
         padding: '10px 0',
+      },
+      filter: {
+        height: '34px',
+        padding: '8px 14px',
+        fontSize: '14px',
       },
     },
     radius: {
