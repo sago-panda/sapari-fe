@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.7
+# syntax=docker/dockerfile:1.24@sha256:87999aa3d42bdc6bea60565083ee17e86d1f3339802f543c0d03998580f9cb89
 # ─────────────────────────────────────────────────────────────────────────────
 # 정적 SPA(React+TS+Vite) 배포 이미지 — frontend-deploy-guide.html §1~9 적용
 #   §2 베이스 = scratch(런타임), §3 서버 = static-web-server, §4 멀티스테이지+레이어순서,
@@ -17,7 +17,7 @@
 # ─────────────────────────────────────────────────────────────────────────────
 
 # ── 1) 빌드 스테이지 (glibc — rolldown linux-x64-gnu 네이티브 바인딩 호환) ──
-FROM node:22-bookworm-slim@sha256:7af03b14a13c8cdd38e45058fd957bf00a72bbe17feac43b1c15a689c029c732 AS build
+FROM node:22-bookworm-slim@sha256:e21fc383b50d5347dc7a9f1cae45b8f4e2f0d39f7ade28e4eef7d2934522b752 AS build
 WORKDIR /app
 ENV CI=true
 
@@ -42,7 +42,7 @@ RUN node "$(sed -n 's/^yarnPath: *//p' .yarnrc.yml)" build
 # ── 2) 정적 서버 바이너리 추출 (§3) ──
 # static-web-server alpine 변형 = musl 정적 링크 → scratch에 그대로 복사 가능.
 # (debian :2 변형은 glibc 동적링크라 scratch에서 못 뜸 → alpine 사용)
-FROM joseluisq/static-web-server:2-alpine@sha256:8aa4c9a140a76f18d154656503dbd856effd9d7cd75e6092348d522e73b3ca28 AS sws
+FROM joseluisq/static-web-server:2-alpine@sha256:9ddec0e5fb0320cbba2ded016fc96179c5a891feec1b2049a331bc190c08008f AS sws
 
 # ── 3) 런타임 스테이지 (§2: scratch — OS 없음) ──
 FROM scratch
