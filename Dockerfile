@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.7
+# syntax=docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
 # ─────────────────────────────────────────────────────────────────────────────
 # 정적 SPA(React+TS+Vite) 배포 이미지 — frontend-deploy-guide.html §1~9 적용
 #   §2 베이스 = scratch(런타임), §3 서버 = static-web-server, §4 멀티스테이지+레이어순서,
