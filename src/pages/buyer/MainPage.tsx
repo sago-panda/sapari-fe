@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { Btn, Input } from '../../components/atoms';
-import { Filter } from '../../components/molecules';
+import {
+  Filter,
+  DeliveryCard,
+  SmallLiveCard,
+} from '../../components/molecules';
 import './google.css';
 
 export default function MainPage() {
@@ -20,17 +24,18 @@ export default function MainPage() {
   return (
     <div>
       <div>
-        <Btn color='primary' size='medium' radius='medium'>
-          Primary Button
+        <Btn color='empty' state='option'>
+          변경
         </Btn>
-        <Btn color='primaryEmpty' size='medium' radius='medium'>
-          Primary Empty Button
+        <Btn color='primaryLight' state='option'>
+          선택
         </Btn>
-        <Btn color='empty' size='medium' radius='medium'>
-          Empty Button
+        <Btn color='primaryEmpty' state='thinBtn'>
+          Thin Button
         </Btn>
-        <Btn color='primary' size='full' radius='round'>
-          Full Button
+        <Btn state='thickBtn'>Thick Button</Btn>
+        <Btn state='roundBtn' size='full'>
+          Round Button
         </Btn>
       </div>
       <Input placeholder='size = small' />
@@ -38,7 +43,9 @@ export default function MainPage() {
       <Input placeholder='size = price' size='price' />
       <Input placeholder='size = searchBar' size='searchBar' />
       <Filter list={filterList} onClick={onClick} />
-      <button className='gsi-material-button' style={{ width: '333px' }}>
+      <DeliveryCard />
+      <SmallLiveCard />
+      {/* <button className='gsi-material-button' style={{ width: '333px' }}>
         <div className='gsi-material-button-state'></div>
         <div className='gsi-material-button-content-wrapper'>
           <div className='gsi-material-button-icon'>
@@ -71,7 +78,7 @@ export default function MainPage() {
           <span className='gsi-material-button-contents'>구글 로그인</span>
           <span style={{ display: 'none' }}>Sign in with Google</span>
         </div>
-      </button>
+      </button> */}
     </div>
   );
 }

@@ -6,7 +6,7 @@ export const inputStyle = style({
   boxSizing: 'border-box',
   width: '100%',
   border: 'none',
-  lineHeight: '130%',
+  lineHeight: 1.3,
   letterSpacing: '-0.04em',
 
   color: vars.color.text.main,

@@ -56,18 +56,33 @@ globalFontFace('jalnan_bold', {
   fontDisplay: 'swap',
 });
 
-export const fontRecipe = recipe({
+export const fontVariants = recipe({
   variants: {
-    type: {
-      title: {
+    state: {
+      logo: {
         fontFamily: 'jalnan_bold',
         fontSize: '24px',
         lineHeight: 1.4,
       },
-      content: {
-        fontFamily: 'minsans_regular',
+      liveTitleMedium: {
+        fontFamily: 'minsans_medium',
+        fontSize: '14px',
+        lineHeight: 1.3,
+      },
+      liveContent: {
+        fontFamily: 'minsans_medium',
+        fontSize: '14px',
+        lineHeight: 1.4,
+      },
+      cardTitle: {
+        fontFamily: 'minsans_bold',
         fontSize: '16px',
-        lineHeight: 1.6,
+        lineHeight: 1.3,
+      },
+      cardContent: {
+        fontFamily: 'minsans_regular',
+        fontSize: '14px',
+        lineHeight: 1.3,
       },
     },
   },

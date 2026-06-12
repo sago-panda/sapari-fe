@@ -1,8 +1,8 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
-import { btnVariant } from './btn.css';
+import { btnLabel, btnVariants } from './btn.css';
 import type { RecipeVariants } from '@vanilla-extract/recipes';
 
-type BtnVariants = RecipeVariants<typeof btnVariant>;
+type BtnVariants = RecipeVariants<typeof btnVariants>;
 
 type BtnProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'color'> &
   BtnVariants & {
@@ -13,8 +13,8 @@ type BtnProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'color'> &
 export default function Btn({
   children,
   color,
+  state,
   size,
-  radius,
   disabled = false,
   className = '',
   onClick,
@@ -23,12 +23,12 @@ export default function Btn({
   return (
     <button
       type='button'
-      className={`${btnVariant({ color, size, radius })} ${className}`}
+      className={`${btnVariants({ color, state, size })} ${className}`}
       disabled={disabled}
       onClick={onClick}
       {...props}
     >
-      {children}
+      <span className={btnLabel}>{children}</span>
     </button>
   );
 }

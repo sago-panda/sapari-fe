@@ -47,4 +47,18 @@ export const vars = createGlobalTheme(':root', {
     light: 'minsans_light',
     jalnan: 'jalnan_bold',
   },
+  radius: {
+    small: {
+      borderRadius: '4px',
+    },
+    medium: {
+      borderRadius: '8px',
+    },
+    large: {
+      borderRadius: '12px',
+    },
+    round: {
+      borderRadius: '9999px',
+    },
+  },
 });
