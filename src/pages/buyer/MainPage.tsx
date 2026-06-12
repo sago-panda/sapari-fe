@@ -4,6 +4,7 @@ import {
   Filter,
   DeliveryCard,
   SmallLiveCard,
+  LiveCard,
 } from '../../components/molecules';
 import './google.css';
 
@@ -45,6 +46,7 @@ export default function MainPage() {
       <Filter list={filterList} onClick={onClick} />
       <DeliveryCard />
       <SmallLiveCard />
+      <LiveCard />
       {/* <button className='gsi-material-button' style={{ width: '333px' }}>
         <div className='gsi-material-button-state'></div>
         <div className='gsi-material-button-content-wrapper'>

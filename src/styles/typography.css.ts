@@ -1,5 +1,6 @@
 import { globalFontFace } from '@vanilla-extract/css';
 import { recipe } from '@vanilla-extract/recipes';
+import { vars } from './theme.css';
 
 globalFontFace('minsans_bold', {
   src: [
@@ -69,8 +70,13 @@ export const fontVariants = recipe({
         fontSize: '14px',
         lineHeight: 1.3,
       },
+      liveTitleBold: {
+        fontFamily: 'minsans_bold',
+        fontSize: '14px',
+        lineHeight: 1.3,
+      },
       liveContent: {
-        fontFamily: 'minsans_medium',
+        fontFamily: 'minsans_regular',
         fontSize: '14px',
         lineHeight: 1.4,
       },
@@ -83,6 +89,13 @@ export const fontVariants = recipe({
         fontFamily: 'minsans_regular',
         fontSize: '14px',
         lineHeight: 1.3,
+      },
+
+      miniCardTitle: {
+        fontFamily: 'minsans_regular',
+        fontSize: '12px',
+        lineHeight: 1.3,
+        color: vars.color.text.secondary,
       },
     },
   },
