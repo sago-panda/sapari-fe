@@ -1,6 +1,7 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import { btnLabel, btnVariants } from './btn.css';
 import type { RecipeVariants } from '@vanilla-extract/recipes';
+import { fontVariants } from '../../../styles/typography.css';
 
 type BtnVariants = RecipeVariants<typeof btnVariants>;
 
@@ -28,7 +29,9 @@ export default function Btn({
       onClick={onClick}
       {...props}
     >
-      <span className={btnLabel}>{children}</span>
+      <span className={`${fontVariants({ ellipsis: '1line' })} ${btnLabel}`}>
+        {children}
+      </span>
     </button>
   );
 }

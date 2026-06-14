@@ -46,7 +46,12 @@ export default function MainPage() {
       <Filter list={filterList} onClick={onClick} />
       <DeliveryCard />
       <SmallLiveCard />
-      <LiveCard />
+      <div style={{ display: 'flex', gap: '8px' }}>
+        <LiveCard state='default' />
+        <LiveCard state='ranking' />
+        <LiveCard state='live' />
+      </div>
+
       {/* <button className='gsi-material-button' style={{ width: '333px' }}>
         <div className='gsi-material-button-state'></div>
         <div className='gsi-material-button-content-wrapper'>
