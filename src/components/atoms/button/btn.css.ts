@@ -20,9 +20,6 @@ export const btnBase = style({
 
 export const btnLabel = style({
   minWidth: 0,
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
 });
 
 export const btnVariants = recipe({
