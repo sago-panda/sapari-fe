@@ -17,7 +17,7 @@
 # ─────────────────────────────────────────────────────────────────────────────
 
 # ── 1) 빌드 스테이지 (glibc — rolldown linux-x64-gnu 네이티브 바인딩 호환) ──
-FROM node:22-bookworm-slim@sha256:e21fc383b50d5347dc7a9f1cae45b8f4e2f0d39f7ade28e4eef7d2934522b752 AS build
+FROM node:24-bookworm-slim@sha256:2c87ef9bd3c6a3bd4b472b4bec2ce9d16354b0c574f736c476489d09f560a203 AS build
 WORKDIR /app
 ENV CI=true
 
