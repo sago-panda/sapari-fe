@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Btn, Input } from '../../components/atoms';
+import { Btn, Input, HorizontalScroll } from '../../components/atoms';
 import {
   Filter,
   DeliveryCard,
@@ -14,14 +14,15 @@ export default function MainPage() {
     { id: 2, name: '카테고리' },
     { id: 3, name: '가격' },
     { id: 4, name: '평점' },
-    { id: 5, name: '평점' },
-    { id: 6, name: '평점' },
-    { id: 7, name: '평점' },
+    { id: 5, name: '별점' },
+    { id: 6, name: '리뷰 많은 순' },
+    { id: 7, name: '좋아요 많은 순' },
   ]);
 
   const onClick = () => {
     console.log('외부 onClick 함수 실행');
   };
+
   return (
     <div>
       <div>
@@ -45,12 +46,16 @@ export default function MainPage() {
       <Input placeholder='size = searchBar' size='searchBar' />
       <Filter list={filterList} onClick={onClick} />
       <DeliveryCard />
-      <SmallLiveCard />
       <div style={{ display: 'flex', gap: '8px' }}>
+        <SmallLiveCard />
+        <SmallLiveCard state='waiting' />
+      </div>
+
+      <HorizontalScroll>
         <LiveCard state='default' />
         <LiveCard state='ranking' />
         <LiveCard state='live' />
-      </div>
+      </HorizontalScroll>
 
       {/* <button className='gsi-material-button' style={{ width: '333px' }}>
         <div className='gsi-material-button-state'></div>

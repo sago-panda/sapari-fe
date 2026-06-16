@@ -4,7 +4,7 @@ import * as styles from './smallLiveCard.css.ts';
 import { calcLiveDate } from '../../../shared/dayjs';
 
 type SmallLiveCardProps = {
-  state: 'live' | 'waiting' | 'default';
+  state?: 'live' | 'waiting' | 'default';
 };
 
 export default function SmallLiveCard({

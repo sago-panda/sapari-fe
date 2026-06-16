@@ -30,7 +30,6 @@ export const waiting = style({
   justifyContent: 'center',
   backgroundColor: '#00000080',
   color: vars.color.white,
-  // fontFamily: vars.font.bold,
   fontSize: '12px',
   lineHeight: 1.4,
 });
